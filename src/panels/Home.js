@@ -1,42 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar, Text } from '@vkontakte/vkui';
+import { Panel, PanelHeader, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import { Icon28UserOutline } from '@vkontakte/icons';
 
-const Home = ({ id, go, fetchedUser }) => (
-	<Panel id={id}>
-		<PanelHeader>Example</PanelHeader>
-		{fetchedUser &&
-		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
-			<Cell
-				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
-				subtitle={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
-			>
-				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
-			</Cell>
-		</Group>}
+const Home = ({ go, id, user }) => {
+	return (
 
-		<Group header={<Header mode="secondary">Navigation Example</Header>}>
-			<Div>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="persik">
-					Show me the Persik, please
-				</Button>
-				<Text>Текст</Text>
-			</Div>
-		</Group>
-	</Panel>
-);
+		<Panel id={id}>
+			<PanelHeader>Тестовое задание</PanelHeader>
+			{user &&
+				<Group>
+					<Cell
+						before={user.photo_200 ? <Avatar src={user.photo_200} /> : null}
+					>
+						{`${user.first_name} ${user.last_name}`}
+					</Cell>
 
+					<Div>
+						<Cell expandable before={<Icon28UserOutline />} onClick={go}>
+							Друзья
+						</Cell>
+					</Div>
+				</Group>}
+		</Panel>
+	)
+}
 Home.propTypes = {
-	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
-	fetchedUser: PropTypes.shape({
+	id: PropTypes.string.isRequired,
+	user: PropTypes.shape({
 		photo_200: PropTypes.string,
 		first_name: PropTypes.string,
 		last_name: PropTypes.string,
-		city: PropTypes.shape({
-			title: PropTypes.string,
-		}),
 	}),
 };
 
